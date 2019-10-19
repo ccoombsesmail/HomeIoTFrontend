@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
 
@@ -10,8 +10,8 @@ class App extends Component {
 
   state = {
 
-		arr: []
-	};
+    arr: []
+  };
 
 
 
@@ -20,7 +20,7 @@ class App extends Component {
 
 
     var currentState = this.state.arr;
-    if (this.state.arr.length === 11 && String(e.key) == "Enter"){
+    if (this.state.arr.length === 11 && String(e.key) === "Enter") {
 
 
       /*
@@ -31,60 +31,63 @@ class App extends Component {
       iv: iv,
      });
 */
-     // console.log("Ho")
-
+      // console.log("Ho")
 
       const http = new XMLHttpRequest();
       http.open("POST", "http://localhost:5000/");
-      http.setRequestHeader("Content-Type", "application/json", true);
-      
-       /*  const body = JSON.stringify({
-        
-        DATA: String(this.state.arr),
-        
-      });  */
-     // const body = String(this.state.arr.join(""))
-      const body =  CryptoJS.SHA256(String(this.state.arr.join(""))).toString(CryptoJS.enc.Hex)
-    // const body = encrypted;
+      http.setRequestHeader("Content-Type", "application/json");
 
-      http.send(body); 
+      http.onreadystatechange = () => {
+        if (http.readyState === 4 && http.status === 200) {
+          window.location.replace("http://localhost:5000/dash/");
+        }
+        return
+      }
+      /*  const body = JSON.stringify({
+
+       DATA: String(this.state.arr),
+
+     });  */
+      // const body = String(this.state.arr.join(""))
+      const body = CryptoJS.SHA256(String(this.state.arr.join(""))).toString(CryptoJS.enc.Hex)
+      // const body = encrypted;
+
+      http.send(body);
       this.state.arr.shift();
-
-      console.log("penis");
 
 
     } else if (this.state.arr.length === 11 && String(e.key) !== "Enter") {
       //console.log("Ho");
 
-    this.state.arr.shift();
+      this.state.arr.shift();
 
     }
 
-		currentState.push(String(e.key).toUpperCase());
-		this.setState({ arr: currentState });
+    currentState.push(String(e.key).toUpperCase());
+    this.setState({ arr: currentState });
 
     console.log(e.key, this.state.arr, this.state.arr.length)
 
-	
-    
-	};
 
-  
+
+  };
+
+
 
   render() {
 
     //console.log(CryptoJS.SHA256("I LOVE COCK").toString(CryptoJS.enc.Hex));
 
 
-  return (
+    return (
 
-    <div className="App" onKeyDown={this.Pressme} tabIndex="0" >
-     
-       {/* <button onClick = {this.pressme}>I Love D </button> */}
+      <div className="App" onKeyDown={this.Pressme} tabIndex="0" >
+
+        {/* <button onClick = {this.pressme}>I Love D </button> */}
 
 
 
-    </div>
+      </div>
     );
 
   }
